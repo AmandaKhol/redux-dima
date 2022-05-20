@@ -1,6 +1,6 @@
 // file for logic
 
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 type CounterState = {
   value: number;
@@ -34,6 +34,23 @@ const counterSlice = createSlice({
         double: state.double * 2,
       };
     },
+
+    // ASK TO EXPLAIN THIS CODE FIRST
+    // the object in the argument is a destructuring of the argument
+    // incrementedNumber here is an alias which is redundant
+    // the function above reads easier:
+    REFACTORED_amountAdded(state, action: PayloadAction<number>) {
+      return {
+        ...state,
+        value: state.value + action.payload
+      }
+    },
+    // Redux docs strongly recommend to model actions as event, not setters this would
+    // lead to a specific naming convention, see this docs:
+    // https://redux.js.org/style-guide/#model-actions-as-events-not-setters
+    // in this amountAdded is a better name than addAmount
+    // KEEP IN MIND: this name is gonna be used for your action creators by redux-toolkit, see
+    // the "export const" at the bottom of this file
     addAmount(state, { payload: incrementNumber }) {
       console.log(incrementNumber);
       return {
